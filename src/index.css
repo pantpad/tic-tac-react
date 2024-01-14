@@ -197,6 +197,15 @@ header h1 {
   color: var(--naples-yellow);
 }
 
+.reset-btn {
+  background-color: var(--red-crayola);
+  color: var(--oxford-blue);
+  font-weight: 900;
+  margin-block-start: 10px;
+  padding: 1em 2em;
+  box-shadow: 0 0 0.5rem rgba(255, 255, 255, 0.1);
+}
+
 /*ANIMATIONS*/
 @keyframes pulse {
   0% {

@@ -3,11 +3,13 @@ export default function GameLog({ gameTurns, resetGame }) {
   return (
     <section className="game-logs">
       {gameTurns.map((turn) => (
-        <span
+        <p
           key={`${turn.clickedSquare.row},${turn.clickedSquare.col}`}
-        >{`${turn.player} has selected ${turn.clickedSquare.row},${turn.clickedSquare.col}`}</span>
+        >{`${turn.player} has selected ${turn.clickedSquare.row},${turn.clickedSquare.col}`}</p>
       ))}
-      <button onClick={resetGame}>RESET GAME</button>
+      <button className="reset-btn" onClick={resetGame}>
+        RESET GAME
+      </button>
     </section>
   );
 }

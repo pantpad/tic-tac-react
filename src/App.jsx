@@ -41,20 +41,6 @@ function App() {
   const [gameTurns, setGameTurns] = useState([]);
   const winner = checkWinner(gameBoard);
 
-  function handleSquareClickTurns(rowIndex, colIndex) {
-    setGameTurns((prevGameTurns) => {
-      if (winner) return [...prevGameTurns];
-      const newGameTurns = [
-        {
-          clickedSquare: { row: rowIndex, col: colIndex },
-          player: activePlayer,
-        },
-        ...prevGameTurns.map((turn) => ({ ...turn })),
-      ];
-      return newGameTurns;
-    });
-  }
-
   function handleSquareClick(rowIndex, colIndex) {
     setGameBoard((prevBoard) => {
       if (winner) return [...prevBoard];
@@ -100,6 +86,7 @@ function App() {
     setPlayers(PLAYERS);
     setGameBoard(initialGameboard);
     setActivePlayer("X");
+    setGameTurns([]);
   }
 
   return (
