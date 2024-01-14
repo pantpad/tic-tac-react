@@ -2,6 +2,7 @@ import "./App.css";
 import { useState } from "react";
 import Player from "./components/Player/Player";
 import GameBoard from "./components/GameBoard/GameBoard";
+import { WINNING_COMBINATIONS } from "./winningCombinations";
 
 const PLAYERS = [
   { name: "PLAYER1", symbol: "X" },
@@ -14,13 +15,33 @@ const initialGameboard = [
   [null, null, null],
 ];
 
+function checkWinner(gameBoard) {
+  let winner;
+  for (const combo of WINNING_COMBINATIONS) {
+    const firstSquare = gameBoard[combo[0].row][combo[0].column];
+    const secondSquare = gameBoard[combo[1].row][combo[1].column];
+    const thirdSquare = gameBoard[combo[2].row][combo[2].column];
+
+    if (
+      firstSquare &&
+      firstSquare === secondSquare &&
+      firstSquare === thirdSquare
+    ) {
+      winner = firstSquare;
+    }
+  }
+  return winner;
+}
+
 function App() {
   const [players, setPlayers] = useState(PLAYERS);
   const [activePlayer, setActivePlayer] = useState("X");
   const [gameBoard, setGameBoard] = useState(initialGameboard);
+  const winner = checkWinner(gameBoard);
 
   function handleSquareClick(rowIndex, colIndex) {
     setGameBoard((prevBoard) => {
+      if (winner) return [...prevBoard];
       const newBoard = [...prevBoard.map((row) => [...row])];
       newBoard[rowIndex][colIndex] = activePlayer;
       return newBoard;
@@ -72,9 +93,9 @@ function App() {
   }
 
   function resetGame() {
-    console.log("Game Will Be RESET!");
     setPlayers(PLAYERS);
     setGameBoard(initialGameboard);
+    setActivePlayer("X");
   }
 
   return (
@@ -82,11 +103,20 @@ function App() {
       <main>
         <section className="game-container">
           <div className="players-container">
-            <Player {...players[0]} onSave={changePlayers} />
-            <Player {...players[1]} onSave={changePlayers} />
+            <Player
+              isActive={activePlayer}
+              {...players[0]}
+              onSave={changePlayers}
+            />
+            <Player
+              isActive={activePlayer}
+              {...players[1]}
+              onSave={changePlayers}
+            />
           </div>
           <GameBoard gameBoard={gameBoard} onChange={handleSquareClick} />
         </section>
+        {winner && <h1>there is a winner</h1>}
         <section className="game-logs">
           <h1>gameLogs</h1>
           <button onClick={resetGame}>RESET GAME</button>

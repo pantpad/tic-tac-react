@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 // eslint-disable-next-line react/prop-types
-export default function Player({ name, symbol, onSave }) {
+export default function Player({ name, symbol, onSave, isActive }) {
   const [inputName, setInputName] = useState();
   const [isEditing, setIsEditing] = useState(false);
 
@@ -27,7 +27,7 @@ export default function Player({ name, symbol, onSave }) {
 
   return (
     <>
-      <div className="player">
+      <div className={isActive === symbol ? "player active" : "player"}>
         {playerSection}
         <div>
           <p>{symbol}</p>
