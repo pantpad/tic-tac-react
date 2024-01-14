@@ -17,7 +17,7 @@ const initialGameboard = [
   [null, null, null],
 ];
 
-function checkWinner(gameBoard) {
+function checkWinner(gameBoard, players) {
   let winner;
   for (const combo of WINNING_COMBINATIONS) {
     const firstSquare = gameBoard[combo[0].row][combo[0].column];
@@ -29,7 +29,7 @@ function checkWinner(gameBoard) {
       firstSquare === secondSquare &&
       firstSquare === thirdSquare
     ) {
-      winner = firstSquare;
+      winner = players.find((player) => player.symbol == firstSquare);
     }
   }
   return winner;
@@ -61,7 +61,7 @@ function App() {
   const [gameTurns, setGameTurns] = useState([]);
   const gameBoard = getBoardFromTurns(gameTurns);
   const activePlayer = getActivePlayerFromPrevTurn(gameTurns);
-  const winner = checkWinner(gameBoard);
+  const winner = checkWinner(gameBoard, players);
   const hasDraw = gameTurns.length == 9 && !winner;
 
   function handleSquareClick(rowIndex, colIndex) {
