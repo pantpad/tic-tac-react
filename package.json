@@ -2,7 +2,7 @@
   "name": "tic-tac-copy",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://pantpad.github.io/project-name",
+  "homepage": "https://pantpad.github.io/tic-tac-react",
   "type": "module",
   "scripts": {
     "dev": "vite",
