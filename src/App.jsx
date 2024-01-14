@@ -1,14 +1,62 @@
 import "./App.css";
 import { useState } from "react";
 import Player from "./components/Player/Player";
+import GameBoard from "./components/GameBoard/GameBoard";
 
 const PLAYERS = [
   { name: "PLAYER1", symbol: "X" },
   { name: "PLAYER2", symbol: "O" },
 ];
 
+const initialGameboard = [
+  [null, null, null],
+  [null, null, null],
+  [null, null, null],
+];
+
 function App() {
   const [players, setPlayers] = useState(PLAYERS);
+  const [activePlayer, setActivePlayer] = useState("X");
+  const [gameBoard, setGameBoard] = useState(initialGameboard);
+
+  function handleSquareClick(rowIndex, colIndex) {
+    setGameBoard((prevBoard) => {
+      const newBoard = [...prevBoard.map((row) => [...row])];
+      newBoard[rowIndex][colIndex] = activePlayer;
+      return newBoard;
+    });
+    setActivePlayer((prevPlayer) => {
+      if (prevPlayer === "O") {
+        return "X";
+      } else {
+        return "O";
+      }
+    });
+  }
+
+  // for (const turn of gameTurns) {
+  //   const { square, player } = turn;
+  //   const { row, col } = square;
+  //   gameBoard[row][col] = player;
+  // }
+
+  // function handleSquareClick(rowIndex,colIndex) {
+  //   setGameTurns((prevTurns) => {
+  //     return [...prevTurns.map((turn) => {
+  //       return {
+  //         square:{},
+  //       ...turn}
+  //     })];
+  //   });
+  // }
+
+  // `gameTurns = [
+  //   {
+  //     square: {row: rowIndex,col: colIndex},
+  //     player: x/o
+  //   }
+  // ]`;
+
   function changePlayers(newName, playerSymbol) {
     setPlayers((prevPlayers) => {
       return [
@@ -26,6 +74,7 @@ function App() {
   function resetGame() {
     console.log("Game Will Be RESET!");
     setPlayers(PLAYERS);
+    setGameBoard(initialGameboard);
   }
 
   return (
@@ -36,19 +85,7 @@ function App() {
             <Player {...players[0]} onSave={changePlayers} />
             <Player {...players[1]} onSave={changePlayers} />
           </div>
-          <div className="game-board-container">
-            <div className="game-board">
-              <button className="squared-button">x</button>
-              <button className="squared-button">x</button>
-              <button className="squared-button">x</button>
-              <button className="squared-button">x</button>
-              <button className="squared-button">x</button>
-              <button className="squared-button">x</button>
-              <button className="squared-button">x</button>
-              <button className="squared-button">x</button>
-              <button className="squared-button">x</button>
-            </div>
-          </div>
+          <GameBoard gameBoard={gameBoard} onChange={handleSquareClick} />
         </section>
         <section className="game-logs">
           <h1>gameLogs</h1>
