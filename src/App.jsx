@@ -40,7 +40,6 @@ function getBoardFromTurns(gameTurns) {
   for (const turn of gameTurns) {
     const { clickedSquare, player } = turn;
     const { row, col } = clickedSquare;
-    console.log(player);
     gameBoard[row][col] = player;
   }
 
@@ -62,6 +61,7 @@ function App() {
   const gameBoard = getBoardFromTurns(gameTurns);
   const activePlayer = getActivePlayerFromPrevTurn(gameTurns);
   const winner = checkWinner(gameBoard);
+  const hasDraw = gameTurns.length == 9 && !winner;
 
   function handleSquareClick(rowIndex, colIndex) {
     setGameTurns((prevGameTurns) => {
@@ -111,9 +111,14 @@ function App() {
             onSave={changePlayers}
           />
         </div>
-        <GameBoard gameBoard={gameBoard} onChange={handleSquareClick} />
+        <GameBoard
+          gameBoard={gameBoard}
+          onChange={handleSquareClick}
+          winner={winner}
+        />
       </section>
       {winner && <h1>there is a winner</h1>}
+      {hasDraw && <h1>DRAW</h1>}
       <GameLog resetGame={resetGame} gameTurns={gameTurns} />
     </main>
   );

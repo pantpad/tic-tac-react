@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-export default function GameBoard({ gameBoard, onChange }) {
+export default function GameBoard({ gameBoard, onChange, winner }) {
   return (
     <>
       <div className="game-board-container">
@@ -11,6 +11,7 @@ export default function GameBoard({ gameBoard, onChange }) {
                   key={`${rowIndex},${colIndex}`}
                   className="squared-button"
                   onClick={() => onChange(rowIndex, colIndex)}
+                  disabled={col || winner}
                 >
                   {col}
                 </button>

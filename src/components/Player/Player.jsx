@@ -20,7 +20,7 @@ export default function Player({ name, symbol, onSave, isActive }) {
   }
 
   //prettier-ignore
-  let playerSection = !isEditing ? <span>{name}</span> : <input type="text" value={inputName} onChange={handleChange} required/>;
+  let playerSection = !isEditing ? <span>{name}</span> : <input type="text" value={inputName} onChange={handleChange} required maxLength={10}/>;
 
   //prettier-ignore
   let buttonSection = !isEditing ? <button onClick={handleEditClick}>Edit</button> : <button onClick={handleSave}>Save</button>;

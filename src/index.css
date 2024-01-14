@@ -160,8 +160,16 @@ header h1 {
 
 .player input {
   color: var(--naples-yellow);
+  font: inherit;
+  outline: none;
   border: none;
+  font-size: 1.3rem;
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 0.5rem;
+  animation: pulse-text 2s infinite;
   text-align: center;
+  vertical-align: baseline;
+  text-transform: uppercase;
 }
 
 .player button {
@@ -190,6 +198,10 @@ header h1 {
   font-size: var(--fs-h1);
   aspect-ratio: 1;
   box-shadow: 0 0 0.5rem rgba(255, 255, 255, 0.2);
+}
+
+.squared-button:disabled {
+  color: inherit;
 }
 
 .game-logs {
