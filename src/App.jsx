@@ -1,8 +1,9 @@
 import "./App.css";
 import { useState } from "react";
+import { WINNING_COMBINATIONS } from "./winningCombinations";
 import Player from "./components/Player/Player";
 import GameBoard from "./components/GameBoard/GameBoard";
-import { WINNING_COMBINATIONS } from "./winningCombinations";
+import GameLog from "./components/GameLog/GameLog";
 
 const PLAYERS = [
   { name: "PLAYER1", symbol: "X" },
@@ -132,10 +133,7 @@ function App() {
           <GameBoard gameBoard={gameBoard} onChange={handleSquareClick} />
         </section>
         {winner && <h1>there is a winner</h1>}
-        <section className="game-logs">
-          <h1>gameLogs</h1>
-          <button onClick={resetGame}>RESET GAME</button>
-        </section>
+        <GameLog resetGame={resetGame} />
       </main>
     </>
   );
