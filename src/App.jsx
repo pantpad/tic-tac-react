@@ -4,6 +4,7 @@ import { WINNING_COMBINATIONS } from "./winningCombinations";
 import Player from "./components/Player/Player";
 import GameBoard from "./components/GameBoard/GameBoard";
 import GameLog from "./components/GameLog/GameLog";
+import GameOver from "./components/GameOver/GameOver";
 
 const PLAYERS = [
   { name: "PLAYER1", symbol: "X" },
@@ -117,8 +118,11 @@ function App() {
           winner={winner}
         />
       </section>
-      {winner && <h1>there is a winner</h1>}
-      {hasDraw && <h1>DRAW</h1>}
+      {winner || hasDraw ? (
+        <GameOver winner={winner} onRestart={resetGame} />
+      ) : (
+        ""
+      )}
       <GameLog resetGame={resetGame} gameTurns={gameTurns} />
     </main>
   );
