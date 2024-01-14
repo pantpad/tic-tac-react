@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 export default function GameOver({ winner, onRestart }) {
   return (
-    <div className="game-over">
+    <div className="game-over overlay">
       <h1>GAME OVER!</h1>
       {winner ? <p>{winner.name} WON</p> : <p>DRAW!</p>}
       <button className="reset-btn" onClick={onRestart}>
