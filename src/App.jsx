@@ -62,6 +62,17 @@ function App() {
       newBoard[rowIndex][colIndex] = activePlayer;
       return newBoard;
     });
+    setGameTurns((prevGameTurns) => {
+      if (winner) return [...prevGameTurns];
+      const newGameTurns = [
+        {
+          clickedSquare: { row: rowIndex, col: colIndex },
+          player: activePlayer,
+        },
+        ...prevGameTurns.map((turn) => ({ ...turn })),
+      ];
+      return newGameTurns;
+    });
     setActivePlayer((prevPlayer) => {
       if (prevPlayer === "O") {
         return "X";
@@ -70,29 +81,6 @@ function App() {
       }
     });
   }
-
-  // for (const turn of gameTurns) {
-  //   const { square, player } = turn;
-  //   const { row, col } = square;
-  //   gameBoard[row][col] = player;
-  // }
-
-  // function handleSquareClick(rowIndex,colIndex) {
-  //   setGameTurns((prevTurns) => {
-  //     return [...prevTurns.map((turn) => {
-  //       return {
-  //         square:{},
-  //       ...turn}
-  //     })];
-  //   });
-  // }
-
-  // `gameTurns = [
-  //   {
-  //     square: {row: rowIndex,col: colIndex},
-  //     player: x/o
-  //   }
-  // ]`;
 
   function changePlayers(newName, playerSymbol) {
     setPlayers((prevPlayers) => {
@@ -115,27 +103,25 @@ function App() {
   }
 
   return (
-    <>
-      <main>
-        <section className="game-container">
-          <div className="players-container">
-            <Player
-              isActive={activePlayer}
-              {...players[0]}
-              onSave={changePlayers}
-            />
-            <Player
-              isActive={activePlayer}
-              {...players[1]}
-              onSave={changePlayers}
-            />
-          </div>
-          <GameBoard gameBoard={gameBoard} onChange={handleSquareClick} />
-        </section>
-        {winner && <h1>there is a winner</h1>}
-        <GameLog resetGame={resetGame} />
-      </main>
-    </>
+    <main>
+      <section className="game-container">
+        <div className="players-container">
+          <Player
+            isActive={activePlayer}
+            {...players[0]}
+            onSave={changePlayers}
+          />
+          <Player
+            isActive={activePlayer}
+            {...players[1]}
+            onSave={changePlayers}
+          />
+        </div>
+        <GameBoard gameBoard={gameBoard} onChange={handleSquareClick} />
+      </section>
+      {winner && <h1>there is a winner</h1>}
+      <GameLog resetGame={resetGame} gameTurns={gameTurns} />
+    </main>
   );
 }
 
