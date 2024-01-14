@@ -1,4 +1,10 @@
 import "./App.css";
+import Player from "./components/Player/Player";
+
+let players = [
+  { name: "PLAYER1", symbol: "X" },
+  { name: "PLAYER2", symbol: "O" },
+];
 
 function App() {
   return (
@@ -6,22 +12,8 @@ function App() {
       <main>
         <section className="game-container">
           <div className="players-container">
-            <div className="player">
-              <span>player1</span>
-              {/* <input type="text" placeholder="player1" /> */}
-              <div>
-                <p>X</p>
-                <button>Edit</button>
-              </div>
-            </div>
-            <div className="player">
-              <span>player2</span>
-              {/* <input type="text" placeholder="player2" /> */}
-              <div>
-                <p>O</p>
-                <button>Edit</button>
-              </div>
-            </div>
+            <Player {...players[0]} />
+            <Player {...players[1]} />
           </div>
           <div className="game-board-container">
             <div className="game-board">
