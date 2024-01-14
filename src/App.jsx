@@ -34,37 +34,46 @@ function checkWinner(gameBoard) {
   return winner;
 }
 
+function getBoardFromTurns(gameTurns) {
+  let gameBoard = [...initialGameboard.map((row) => [...row])];
+
+  for (const turn of gameTurns) {
+    const { clickedSquare, player } = turn;
+    const { row, col } = clickedSquare;
+    console.log(player);
+    gameBoard[row][col] = player;
+  }
+
+  return gameBoard;
+}
+
+function getActivePlayerFromPrevTurn(gameTurns) {
+  console.log(gameTurns);
+  let currentPlayer = "X";
+  if (gameTurns.length > 0 && gameTurns[0].player === "X") {
+    currentPlayer = "O";
+  }
+  return currentPlayer;
+}
+
 function App() {
   const [players, setPlayers] = useState(PLAYERS);
-  const [activePlayer, setActivePlayer] = useState("X");
-  const [gameBoard, setGameBoard] = useState(initialGameboard);
   const [gameTurns, setGameTurns] = useState([]);
+  const gameBoard = getBoardFromTurns(gameTurns);
+  const activePlayer = getActivePlayerFromPrevTurn(gameTurns);
   const winner = checkWinner(gameBoard);
 
   function handleSquareClick(rowIndex, colIndex) {
-    setGameBoard((prevBoard) => {
-      if (winner) return [...prevBoard];
-      const newBoard = [...prevBoard.map((row) => [...row])];
-      newBoard[rowIndex][colIndex] = activePlayer;
-      return newBoard;
-    });
     setGameTurns((prevGameTurns) => {
       if (winner) return [...prevGameTurns];
       const newGameTurns = [
         {
           clickedSquare: { row: rowIndex, col: colIndex },
-          player: activePlayer,
+          player: getActivePlayerFromPrevTurn(prevGameTurns),
         },
         ...prevGameTurns.map((turn) => ({ ...turn })),
       ];
       return newGameTurns;
-    });
-    setActivePlayer((prevPlayer) => {
-      if (prevPlayer === "O") {
-        return "X";
-      } else {
-        return "O";
-      }
     });
   }
 
@@ -84,8 +93,6 @@ function App() {
 
   function resetGame() {
     setPlayers(PLAYERS);
-    setGameBoard(initialGameboard);
-    setActivePlayer("X");
     setGameTurns([]);
   }
 
